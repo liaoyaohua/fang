@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='GBK' ?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+        <!-- <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="debug"/>
+        </filter> -->
+    </appender>
+
+    <appender name="FILE-ALL" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="Append" value="true"/>
+        <param name="file" value="${log4j.log.path}/fang.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+    
+    <appender name="FILE-COMMON" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="file" value="${log4j.log.path}/fang-common.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+
+    <appender name="FILE-DAO" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="file" value="${log4j.log.path}/fang-dao.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+    
+    <appender name="FILE-MANAGER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="file" value="${log4j.log.path}/fang-manager.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+    
+    <appender name="FILE-SERVICE" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="file" value="${log4j.log.path}/fang-service.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+    
+    <appender name="FILE-RPC" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="file" value="${log4j.log.path}/fang-rpc.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+    
+    <appender name="FILE-CONTROLLER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="file" value="${log4j.log.path}/fang-controller.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+    
+    <appender name="FILE-SQL" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="file" value="${log4j.log.path}/fang-sql.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+
+    <appender name="FILE-VELOCITY" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="file" value="${log4j.log.path}/fang-velocity.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+    
+    <!-- common category -->
+    <category name="com.jieduo.fang.common" additivity="false">
+        <priority value="${log4j.log.level}"/>
+        <appender-ref ref="FILE-COMMON"/>
+    </category>
+    
+    <!-- dao category -->
+    <category name="com.jieduo.fang.dao" additivity="false">
+        <priority value="${log4j.log.level}"/>
+        <appender-ref ref="FILE-DAO"/>
+    </category>
+    
+    <!-- manager category -->
+    <category name="com.jieduo.fang.manager" additivity="false">
+        <priority value="${log4j.log.level}"/>
+        <appender-ref ref="FILE-MANAGER"/>
+    </category>
+    
+    <!-- service category -->
+    <category name="com.jieduo.fang.service" additivity="false">
+        <priority value="${log4j.log.level}"/>
+        <appender-ref ref="FILE-SERVICE"/>
+    </category>
+    
+    <!-- rpc category -->
+    <category name="com.jieduo.fang.service.rpc" additivity="false">
+        <priority value="${log4j.log.level}"/>
+        <appender-ref ref="FILE-RPC"/>
+    </category>
+    
+    <!-- action category -->
+    <category name="com.jieduo.fang.controller" additivity="false">
+        <priority value="${log4j.log.level}"/>
+        <appender-ref ref="FILE-CONTROLLER"/>
+    </category>
+    
+    <category name="java.sql" additivity="true">
+        <priority value="${log4j.log.level}"/>
+        <appender-ref ref="FILE-SQL"/>
+        ${log4j.log.appender}
+    </category>
+
+    <category name="org.apache.velocity" additivity="false">
+        <priority value="${log4j.log.level}"/>
+        <appender-ref ref="FILE-VELOCITY"/>
+    </category>
+    
+    <root>
+        <priority value="${log4j.log.level}"/>
+        <appender-ref ref="FILE-ALL"/>
+        ${log4j.log.appender}
+    </root>
+</log4j:configuration>

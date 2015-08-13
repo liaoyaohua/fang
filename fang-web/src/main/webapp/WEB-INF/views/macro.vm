@@ -1,0 +1,96 @@
+#macro(showPagebar $methodName $currentPageNo  $totalNum $pageSize)
+    #set($pg = $currentPageNo)
+    #if($totalNum % $pageSize == 0)
+        #set ($pageCount = $totalNum / $pageSize )
+    #else
+        #set ($pageCount = $totalNum / $pageSize + 1 )
+    #end
+    #if ($!currentPageNo > 1)
+    <a href="#" onclick="$methodName($!currentPageNo - 1)">上一页</a>
+    <a href="#" onclick="$methodName(1)">1</a>
+    #else
+    <span>上一页</span>
+    #end
+
+    #showPagePos($methodName $currentPageNo $pageCount)
+
+    #if ($!pg < $!pageCount)
+    <a href="#" onclick="$methodName($!pageCount)">$!pageCount</a>
+    <a href="#" onclick="$methodName($!pg + 1)">下一页</a>
+    #else
+    <span>下一页</span>
+    #end
+#end
+
+## 显示分页尾巴
+#macro(showPagePos $methodName $currentPNo $pageCount)
+    #set($pagePos = 2)
+    #if($!currentPNo > $pagePos + 2) <span class="text">...</span> #end ##显示前面的省略号
+    #set($cpni= $currentPNo)
+    #foreach($i in [$pagePos..1]) ##增加前面的尾巴
+        #if($!cpni - $i > 1)
+            #set($pageIndex= $!cpni - $i)
+            <a href="#" onclick="$!methodName($pageIndex)">$pageIndex</a>
+        #end
+    #end
+    <a class="current">$cpni</a> ##显示当前页号
+    #set($cpnj= $cpni)
+    #foreach($j in [1..$pagePos]) ##增加后面的尾巴
+        #if($pageCount - $cpnj - $j > 0)
+            #set($pageIndex= $cpnj + $j)
+            <a href="#" onclick="$!methodName($pageIndex)">$pageIndex</a>
+        #end
+    #end
+    #if($!pageCount - $!cpnj > $pagePos + 1) <span class="text">...</span> #end ##显示后面的省略号
+#end
+
+#* lizhonglin query page tool  *****end****#
+
+#* lizhonglin query page tool  this method is used by url *****start****#
+#macro(showPagebarUrl $urlMode $currentPageNo  $totalNum $pageSize $anchor)
+    #set($pg = $currentPageNo)
+    #if($totalNum % $pageSize == 0)
+        #set ($pageCount = $totalNum / $pageSize )
+    #else
+        #set ($pageCount = $totalNum / $pageSize + 1 )
+    #end
+    #if ($!currentPageNo > 1)
+        #set($pageNo = ${currentPageNo} - 1)
+    <a href="/${urlMode}-${pageNo}.html$!anchor">上一页</a>
+    <a href="/${urlMode}-1.html$!anchor">1</a>
+    #else
+    <span>上一页</span>
+    #end
+
+    #showPagePosUrl($urlMode $currentPageNo $pageCount $!anchor)
+
+    #if ($!pg < $!pageCount)
+    <a href="/${urlMode}-${pageCount}.html$!anchor">$!pageCount</a>
+        #set($pageNo = $pg + 1)
+    <a href="/${urlMode}-${pageNo}.html$!anchor">下一页</a>
+    #else
+    <span>下一页</span>
+    #end
+#end
+
+## 显示分页尾巴
+#macro(showPagePosUrl $urlMode $currentPNo $pageCount $anchor)
+    #set($pagePos = 2)
+    #if($!currentPNo > $pagePos + 2) <span class="text">...</span> #end ##显示前面的省略号
+    #set($cpni= $currentPNo)
+    #foreach($i in [$pagePos..1]) ##增加前面的尾巴
+        #if($!cpni - $i > 1)
+            #set($pageIndex= $!cpni - $i)
+        <a href="/${urlMode}-${pageIndex}.html$!anchor">$pageIndex</a>
+        #end
+    #end
+<a class="current">$cpni</a> ##显示当前页号
+    #set($cpnj= $cpni)
+    #foreach($j in [1..$pagePos]) ##增加后面的尾巴
+        #if($pageCount - $cpnj - $j > 0)
+            #set($pageIndex= $cpnj + $j)
+        <a href="/${urlMode}-${pageIndex}.html$!anchor">$pageIndex</a>
+        #end
+    #end
+    #if($!pageCount - $!cpnj > $pagePos + 1) <span class="text">...</span> #end ##显示后面的省略号
+#end
