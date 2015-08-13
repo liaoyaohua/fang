@@ -1,0 +1,12 @@
+<link rel="stylesheet" href="/static/css/bootstrap.min.css" media="all">
+<link rel="stylesheet" href="/static/css/index.css" media="all">
+<link rel="stylesheet" href="/static/css/calendar.css" media="all">
+<link rel="stylesheet" href="/static/js/vendor/jqueryui/jquery-ui.min.css" media="all">
+
+<script type="text/javascript" src="/static/js/vendor/jquery.js"></script>
+<script type="text/javascript" src="/static/js/vendor/jqueryui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/static/js/vendor/jquery.form-3.46.0.js"></script>
+<script type="text/javascript" src="/static/js/vendor/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/static/js/common/global.js"></script>
+<script type="text/javascript" src="/static/js/common/common.js"></script>
+<script type="text/javascript" src="/static/js/DatePicker/WdatePicker.js"></script>

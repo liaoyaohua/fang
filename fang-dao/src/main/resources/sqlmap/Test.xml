@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="com.jieduo.fang.dao.TestDao">
+    <typeAlias alias="test" type="com.jieduo.fang.domain.Test"/>
+
+	<sql id="Column_List">
+        id,
+        name,
+       	yn,
+        creator,
+        modifier,
+        createTime,
+        modifiedTime
+    </sql>
+    
+    <!-- 更新字段,只要不为NULL则更新,除开主键 -->
+    <sql id="Update_Set">
+        <dynamic prepend="SET">
+        	<isNotNull prepend="," property="name">
+                name = #name#
+            </isNotNull>
+        </dynamic>
+    </sql>
+    
+    <select id="selectEntryByKey" parameterClass="long" resultClass="test">
+    	SELECT
+        <include refid="Column_List"/>
+        FROM test
+        where id = #id#
+    </select>
+    
+    <!-- 分页查询 -->
+    <select id="selectEntryByWhereCount" resultClass="int">
+        select count(id) from test
+    </select>
+    <select id="selectEntryByWherePage" resultClass="test">
+        SELECT
+        <include refid="Column_List"/>
+        FROM test
+        LIMIT #offset#, #pageSize#
+    </select>
+    
+    <insert id="insertEntry" parameterClass="test">
+    	<selectKey keyProperty="id" type="post" resultClass="java.lang.Long">
+            SELECT @@IDENTITY AS VALUE
+        </selectKey>
+        INSERT INTO test(
+        	name,
+       		yn,
+        	creator,
+        	modifier,
+        	createTime,
+        	modifiedTime
+        )
+        VALUES(
+        	#name#,
+        	1,
+        	#creator#,
+        	#modifier#,
+        	now(),
+        	now()
+        )
+    </insert>
+
+    <delete id="deleteEntryByKey" parameterClass="long">
+        DELETE FROM test where id = #id#
+    </delete>
+    
+    <!-- 修改记录通过主键 -->
+    <update id="updateEntryByKey" parameterClass="test">
+        UPDATE test
+        <include refid="Update_Set"/>
+        WHERE id = #id#
+    </update>
+</sqlMap>

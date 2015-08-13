@@ -1,0 +1,5 @@
+<!-- 顶部 -->
+<div class="topbar">
+    <div class="logo"><a href="/">异业联盟平台</a></div>
+    <div class="userinfo">欢迎光临，$!{pin}　　<a href="/logout.html">退出</a> | <a href="#">帮助中心</a></div>
+</div>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>fang</artifactId>
+		<groupId>com.jieduo.fang</groupId>
+		<version>1.0</version>
+	</parent>
+	<artifactId>fang-admin</artifactId>
+	<packaging>war</packaging>
+	<name>fang-admin</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.jieduo.fang</groupId>
+			<artifactId>fang-service</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- servlet jsp begin -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+
+		<!-- velocity begin -->
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-tools</artifactId>
+		</dependency>
+		<!-- test scope -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>fang-admin</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<!-- jetty插件 -->
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1.25</version>
+				<configuration>
+					<contextPath>/</contextPath>
+					<scanIntervalSeconds>5</scanIntervalSeconds>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!-- war插件 -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<warName>fang-admin</warName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+            	<!-- 域名 -->
+            	<project.domain.url>admin.fang.jieduo.com</project.domain.url>
+            	
+            	<!-- 登录权限配置 -->
+                <login.admins>liaoyaohua</login.admins>
+
+                <!-- logging -->
+                <log4j.log.level>DEBUG</log4j.log.level>
+                <log4j.log.path>/export/Logs/${project.domain.url}</log4j.log.path>
+                <log4j.log.appender><![CDATA[<appender-ref ref="CONSOLE"/>]]></log4j.log.appender>
+				
+                <springmvc.multipart.uploadTempDir>file:/export/home/data/${project.domain.url}</springmvc.multipart.uploadTempDir>
+
+                <!-- db -->
+                <db.jdbc.driver>com.mysql.jdbc.Driver</db.jdbc.driver>
+                <db.jdbc.url>
+                	<![CDATA[jdbc:mysql://:3306/jieduo?useUnicode=true&amp;characterEncoding=UTF-8]]>
+                </db.jdbc.url>
+                <db.jdbc.username>root</db.jdbc.username>
+                <db.jdbc.password>123456</db.jdbc.password>
+                <!-- dbcp param -->
+                <db_initialSize>2</db_initialSize>
+                <db_maxActive>3</db_maxActive>
+                <db_maxIdle>3</db_maxIdle>
+                <db_minIdle>1</db_minIdle>
+                <db_maxWait>18000</db_maxWait>
+                <db_timeBetweenEvictionRunsMillis>60000</db_timeBetweenEvictionRunsMillis>
+                <db_numTestsPerEvictionRun>5</db_numTestsPerEvictionRun>
+                <db_minEvictableIdleTimeMillis>180000</db_minEvictableIdleTimeMillis>
+                <db_removeAbandoned>true</db_removeAbandoned>
+                <db_removeAbandonedTimeout>300</db_removeAbandonedTimeout>
+                <db_testOnBorrow>true</db_testOnBorrow>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+            	<!-- 域名 -->
+            	<project.domain.url>admin.fang.jieduo.com</project.domain.url>
+            	
+            	<!-- 登录权限配置 -->
+                <login.admins>liaoyaohua</login.admins>
+
+                <!-- logging -->
+                <log4j.log.level>DEBUG</log4j.log.level>
+                <log4j.log.path>/export/Logs/${project.domain.url}</log4j.log.path>
+                <log4j.log.appender><![CDATA[<appender-ref ref="CONSOLE"/>]]></log4j.log.appender>
+
+                <springmvc.multipart.uploadTempDir>file:/export/home/data/${project.domain.url}</springmvc.multipart.uploadTempDir>
+
+                <!-- db -->
+                <db.jdbc.driver>com.mysql.jdbc.Driver</db.jdbc.driver>
+                <db.jdbc.url>
+                	<![CDATA[jdbc:mysql://:3306/jieduo?useUnicode=true&amp;characterEncoding=UTF-8]]>
+                </db.jdbc.url>
+                <db.jdbc.username>root</db.jdbc.username>
+                <db.jdbc.password>123456</db.jdbc.password>
+                <!-- dbcp param -->
+                <db_initialSize>2</db_initialSize>
+                <db_maxActive>3</db_maxActive>
+                <db_maxIdle>3</db_maxIdle>
+                <db_minIdle>1</db_minIdle>
+                <db_maxWait>18000</db_maxWait>
+                <db_timeBetweenEvictionRunsMillis>60000</db_timeBetweenEvictionRunsMillis>
+                <db_numTestsPerEvictionRun>5</db_numTestsPerEvictionRun>
+                <db_minEvictableIdleTimeMillis>180000</db_minEvictableIdleTimeMillis>
+                <db_removeAbandoned>true</db_removeAbandoned>
+                <db_removeAbandonedTimeout>300</db_removeAbandonedTimeout>
+                <db_testOnBorrow>true</db_testOnBorrow>
+            </properties>
+        </profile>
+        <profile>
+            <id>production</id>
+            <properties>
+            	<!-- 域名 -->
+            	<project.domain.url>admin.fang.jieduo.com</project.domain.url>
+            	
+            	<!-- 登录权限配置 -->
+                <login.admins>liaoyaohua</login.admins>
+                
+                <!-- logging -->
+                <log4j.log.level>INFO</log4j.log.level>
+                <log4j.log.path>/export/Logs/${project.domain.url}</log4j.log.path>
+                <log4j.log.appender></log4j.log.appender>
+
+                <springmvc.multipart.uploadTempDir>file:/export/Data/${project.domain.url}</springmvc.multipart.uploadTempDir>
+
+				<!-- db -->
+                <db.jdbc.driver>com.mysql.jdbc.Driver</db.jdbc.driver>
+                <db.jdbc.url>
+                	<![CDATA[jdbc:mysql://:3306/jieduo?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true]]>
+                </db.jdbc.url>
+				<!-- dbcp param -->
+                <db_initialSize>2</db_initialSize>
+                <db_maxActive>3</db_maxActive>
+                <db_maxIdle>3</db_maxIdle>
+                <db_minIdle>1</db_minIdle>
+                <db_maxWait>18000</db_maxWait>
+                <db_timeBetweenEvictionRunsMillis>60000</db_timeBetweenEvictionRunsMillis>
+                <db_numTestsPerEvictionRun>5</db_numTestsPerEvictionRun>
+                <db_minEvictableIdleTimeMillis>180000</db_minEvictableIdleTimeMillis>
+                <db_removeAbandoned>true</db_removeAbandoned>
+                <db_removeAbandonedTimeout>300</db_removeAbandonedTimeout>
+                <db_testOnBorrow>true</db_testOnBorrow>
+            </properties>
+        </profile>
+    </profiles>
+</project>

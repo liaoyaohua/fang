@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+
+	<!-- 本地service -->
+    <bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor"
+		init-method="initialize">
+		<property name="corePoolSize" value="20" />
+		<property name="maxPoolSize" value="25" />
+		<property name="queueCapacity" value="30" />
+	</bean>
+</beans>

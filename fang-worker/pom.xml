@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>fang</artifactId>
+		<groupId>com.jieduo.fang</groupId>
+		<version>1.0</version>
+	</parent>
+
+	<artifactId>fang-worker</artifactId>
+	<packaging>jar</packaging>
+	<name>fang-worker</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.jieduo.fang</groupId>
+			<artifactId>fang-service</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+		</dependency>
+
+		<!-- test scope -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>**/log4j.xml</exclude>
+						<exclude>**/important.properties</exclude>
+						<exclude>**/spring-config.xml</exclude>
+						<exclude>conf/**</exclude>
+						<exclude>spring/**</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<appendAssemblyId>false</appendAssemblyId>
+					<descriptors>
+						<descriptor>src/main/assemble/package.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<!-- logging -->
+				<log4j.log.level>DEBUG</log4j.log.level>
+				<log4j.log.path>/export/Logs/worker.fang.jieduo.com</log4j.log.path>
+				<log4j.log.appender><![CDATA[<appender-ref ref="CONSOLE"/>]]></log4j.log.appender>
+
+				<!-- db -->
+				<db.jdbc.driver>com.mysql.jdbc.Driver</db.jdbc.driver>
+				<db.jdbc.url>
+                	<![CDATA[jdbc:mysql://:3306/jieduo?useUnicode=true&amp;characterEncoding=UTF-8]]>
+				</db.jdbc.url>
+				<db.jdbc.username>root</db.jdbc.username>
+				<db.jdbc.password>123456</db.jdbc.password>
+				<!-- dbcp param -->
+				<db_initialSize>2</db_initialSize>
+				<db_maxActive>3</db_maxActive>
+				<db_maxIdle>3</db_maxIdle>
+				<db_minIdle>1</db_minIdle>
+				<db_maxWait>18000</db_maxWait>
+				<db_timeBetweenEvictionRunsMillis>60000</db_timeBetweenEvictionRunsMillis>
+				<db_numTestsPerEvictionRun>5</db_numTestsPerEvictionRun>
+				<db_minEvictableIdleTimeMillis>180000</db_minEvictableIdleTimeMillis>
+				<db_removeAbandoned>true</db_removeAbandoned>
+				<db_removeAbandonedTimeout>300</db_removeAbandonedTimeout>
+				<db_testOnBorrow>true</db_testOnBorrow>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<!-- logging -->
+				<log4j.log.level>DEBUG</log4j.log.level>
+				<log4j.log.path>/export/Logs/worker.fang.jieduo.com</log4j.log.path>
+				<log4j.log.appender><![CDATA[<appender-ref ref="CONSOLE"/>]]></log4j.log.appender>
+
+				<!-- db -->
+				<db.jdbc.driver>com.mysql.jdbc.Driver</db.jdbc.driver>
+				<db.jdbc.url>
+                	<![CDATA[jdbc:mysql://:3306/jieduo?useUnicode=true&amp;characterEncoding=UTF-8]]>
+				</db.jdbc.url>
+				<db.jdbc.username>root</db.jdbc.username>
+				<db.jdbc.password>123456</db.jdbc.password>
+				<!-- dbcp param -->
+				<db_initialSize>2</db_initialSize>
+				<db_maxActive>3</db_maxActive>
+				<db_maxIdle>3</db_maxIdle>
+				<db_minIdle>1</db_minIdle>
+				<db_maxWait>18000</db_maxWait>
+				<db_timeBetweenEvictionRunsMillis>60000</db_timeBetweenEvictionRunsMillis>
+				<db_numTestsPerEvictionRun>5</db_numTestsPerEvictionRun>
+				<db_minEvictableIdleTimeMillis>180000</db_minEvictableIdleTimeMillis>
+				<db_removeAbandoned>true</db_removeAbandoned>
+				<db_removeAbandonedTimeout>300</db_removeAbandonedTimeout>
+				<db_testOnBorrow>true</db_testOnBorrow>
+			</properties>
+		</profile>
+		<profile>
+			<id>production</id>
+			<properties>
+				<!-- logging -->
+				<log4j.log.level>INFO</log4j.log.level>
+				<log4j.log.path>/export/Logs/worker.fang.jieduo.com</log4j.log.path>
+				<log4j.log.appender></log4j.log.appender>
+
+				<!-- db -->
+				<db.jdbc.driver>com.mysql.jdbc.Driver</db.jdbc.driver>
+				<db.jdbc.url>
+                	<![CDATA[jdbc:mysql://:3306/jieduo?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true]]>
+				</db.jdbc.url>
+				<!-- dbcp param -->
+				<db_initialSize>2</db_initialSize>
+				<db_maxActive>3</db_maxActive>
+				<db_maxIdle>3</db_maxIdle>
+				<db_minIdle>1</db_minIdle>
+				<db_maxWait>18000</db_maxWait>
+				<db_timeBetweenEvictionRunsMillis>60000</db_timeBetweenEvictionRunsMillis>
+				<db_numTestsPerEvictionRun>5</db_numTestsPerEvictionRun>
+				<db_minEvictableIdleTimeMillis>180000</db_minEvictableIdleTimeMillis>
+				<db_removeAbandoned>true</db_removeAbandoned>
+				<db_removeAbandonedTimeout>300</db_removeAbandonedTimeout>
+				<db_testOnBorrow>true</db_testOnBorrow>
+			</properties>
+		</profile>
+	</profiles>
+</project>
