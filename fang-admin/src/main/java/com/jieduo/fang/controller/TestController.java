@@ -24,6 +24,7 @@ public class TestController extends BaseController {
 	 */
 	@RequestMapping(value = "")
 	public String index(Model view) {
+		LOGGER.info("index");
 		return "test/index";
 	}
 	
